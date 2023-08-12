@@ -1,16 +1,41 @@
 import { styled } from "styled-components"
 import logo from "../assets/logo.png"
-import gato from "../assets/gato.png"
+import { useState } from "react"
+import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import { AuthContext } from "../context/AuthContext"
 
-export default function LoginPage(){
-    return(
+export default function LoginPage() {
+
+    const navigate = useNavigate()
+    const {setToken} = AuthContext
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+    function entrar(event) {
+        event.preventDefault()
+        if (password.length < 3) return alert("A senha deve ter pelo menos 3 digitos")
+        axios.post(`${import.meta.env.VITE_API_URL}/signup`, {email, password})
+            .then((resposta)=>{
+                localStorage.setItem("token", resposta.data.token)
+                setToken(resposta.data.token)
+                navigate("/home")
+            })
+            .catch((error)=>{
+                if(error.response.status === 404) return alert("usuário inválido")
+                if(error.response.status === 401) return alert("Senha inválida, tente novamente")
+                alert("Erro ao realizar o login, tente novamente mais tarde ou consulte o suporte tecnico")
+            })
+    }
+
+    return (
         <Page>
             <img src={logo} alt="Logo" />
             <p>LOGIN</p>
             <Container>
-                <Form>
-                    <input type="email" placeholder="Email"/>
-                    <input type="password" placeholder="Senha"/>
+                <Form onSubmit={entrar}>
+                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
+                    <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                     <button>Entrar</button>
                     <h1>Primeira vez? Cadastre-se!</h1>
                 </Form>
@@ -59,8 +84,9 @@ const Form = styled.form`
     align-items: center;
     gap: 10px;
     font-family: 'Raleway', sans-serif;
-    font-weight: 400;
     input{
+        font-family: 'Raleway', sans-serif;
+        font-weight: 400;
         padding-left: 10px;
         width: 80%;
         height: 40px;
@@ -69,11 +95,16 @@ const Form = styled.form`
         background:#F7e37c;
     }
     button{
+        font-family: 'Raleway', sans-serif;
+        font-weight: 700;
         width: 80%;
         height: 40px;
         background-color: #F3D863;
         border-radius: 8px;
         border: none;
+        &:hover{
+            filter: brightness(0.9);
+        }
     }
     h1{
         margin-top: 20px;
