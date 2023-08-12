@@ -1,18 +1,16 @@
 import { createContext, useState } from "react";
 
+const UserContext = createContext()
 
-const AuthContext = createContext()
-
-function AuthContextProider ({children}){
-
+function UserContextProvider({children}){
     const lsToken = localStorage.getItem("token")
     const [token, setToken] = useState(lsToken)
 
     return(
-        <AuthContext.Provider values={{token, setToken}}>
+        <UserContext.Provider value={{token, setToken}}>
             {children}
-        </AuthContext.Provider>
+        </UserContext.Provider>
     )
 }
 
-export {AuthContext, AuthContextProider}
+export {UserContext, UserContextProvider}

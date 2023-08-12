@@ -1,29 +1,29 @@
 import { styled } from "styled-components"
 import logo from "../assets/logo.png"
-import { useState } from "react"
 import axios from "axios"
+import { UserContext } from "../context/AuthContext"
 import { useNavigate } from "react-router-dom"
-import { AuthContext } from "../context/AuthContext"
+import { useContext, useState } from "react"
 
 export default function LoginPage() {
 
     const navigate = useNavigate()
-    const {setToken} = AuthContext
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const { setToken } = useContext(UserContext)
 
     function entrar(event) {
         event.preventDefault()
-        if (password.length < 3) return alert("A senha deve ter pelo menos 3 digitos")
-        axios.post(`${import.meta.env.VITE_API_URL}/signup`, {email, password})
-            .then((resposta)=>{
+        axios.post(`${import.meta.env.VITE_API_URL}/signin`, { email, password })
+            .then((resposta) => {
                 localStorage.setItem("token", resposta.data.token)
                 setToken(resposta.data.token)
                 navigate("/home")
             })
-            .catch((error)=>{
-                if(error.response.status === 404) return alert("usuário inválido")
-                if(error.response.status === 401) return alert("Senha inválida, tente novamente")
+            .catch((error) => {
+                console.log(error)
+                if (error.response.status === 404) return alert("usuário inválido")
+                if (error.response.status === 401) return alert("Senha inválida, tente novamente")
                 alert("Erro ao realizar o login, tente novamente mais tarde ou consulte o suporte tecnico")
             })
     }
@@ -34,10 +34,10 @@ export default function LoginPage() {
             <p>LOGIN</p>
             <Container>
                 <Form onSubmit={entrar}>
-                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
-                    <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                    <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     <button>Entrar</button>
-                    <h1>Primeira vez? Cadastre-se!</h1>
+                    <h1 onClick={() => navigate("/cadastro")}>Primeira vez? Cadastre-se!</h1>
                 </Form>
             </Container>
         </Page>
