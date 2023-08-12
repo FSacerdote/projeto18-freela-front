@@ -4,6 +4,7 @@ import ResetCss from "./style/reset"
 import LoginPage from "./pages/LoginPage"
 import SignUpPage from "./pages/SignUpPage"
 import { UserContextProvider } from "./context/AuthContext"
+import HomePage from "./pages/HomePage"
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<LoginPage/>}/>
           <Route path="/cadastro" element={<SignUpPage/>}/>
-          <Route path="/home"/>
+          <Route path="/home" element={<HomePage/>}/>
           <Route path="/gatos/:id"/>
           <Route path="/gatos/me"/>
         </Routes>
