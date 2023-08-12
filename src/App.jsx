@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import GlobalStyleCss from "./style/globalStyle"
 import ResetCss from "./style/reset"
+import LoginPage from "./pages/LoginPage"
 
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
       <ResetCss/>
       <GlobalStyleCss/>
       <Routes>
-        <Route path="/login"/>
+        <Route path="/login" element={<LoginPage/>}/>
         <Route path="/cadastro"/>
         <Route path="/home"/>
         <Route path="/gatos/:id"/>
