@@ -20,9 +20,15 @@ export default function NewCat() {
         }
     }
 
-    function cadastrar (){
-        if(idade < 1) return alert("A idade deve ser maior que 0")
-        axios.post(`${import.meta.env.VITE_API_URL}/gatos`, {nome, idade, genero, fotoperfil}, config)
+    function cadastrar(event) {
+        event.preventDefault()
+        axios.post(`${import.meta.env.VITE_API_URL}/gatos`, { nome, idade, genero, fotoperfil }, config)
+            .then(() => {
+                navigate("/home")
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     return (
