@@ -53,8 +53,11 @@ const ImageContainer = styled.div`
     height: 70px;
     width: 70px;
     border-radius: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     img{
-        width: 100%;
+        height: 100%;
     }
 `
 const TextContainer = styled.div`

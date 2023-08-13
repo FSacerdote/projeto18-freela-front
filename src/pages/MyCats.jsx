@@ -12,6 +12,7 @@ export default function MyCats(){
     const [gatos, setGatos] = useState([])
     const {token} = useContext(UserContext)
     const [contador, setContador] = useState(0)
+    const [search, setSearch] = useState("")
 
     const config = {
         headers: {
@@ -27,10 +28,12 @@ export default function MyCats(){
             .catch((error)=>console.log(error.response))
     }, [contador])
 
-    if(gatos.length === 0){
+    const filtro = gatos.filter((gato)=> gato.nome.toLowerCase().includes(search.toLowerCase()))
+
+    if(filtro.length === 0){
         return(
             <Page>
-                <Header></Header>
+                <Header search={search} setSearch={setSearch}></Header>
                     <p>Nenhum gatinho por aqui ainda</p>
                     <GiCat color="#4d4d4d" size="100px"/>
                 <Footer></Footer>
@@ -40,9 +43,9 @@ export default function MyCats(){
 
     return(
         <Page>
-            <Header></Header>
+            <Header search={search} setSearch={setSearch}></Header>
                 <CatContainer>
-                    {gatos?.map((gato)=><MyCat key={gato.id} gato={gato} contador={contador} setContador={setContador}/>)}
+                    {filtro?.map((gato)=><MyCat key={gato.id} gato={gato} contador={contador} setContador={setContador}/>)}
                 </CatContainer>
             <Footer></Footer>
         </Page>

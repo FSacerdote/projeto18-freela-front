@@ -1,11 +1,13 @@
+import { useNavigate } from "react-router-dom"
 import { styled } from "styled-components"
 
 export default function Cat({gato}){
 
-    const { nome, idade, genero, fotoperfil } = gato
+    const { nome, idade, genero, fotoperfil, id } = gato
+    const navigate = useNavigate()
 
     return(
-        <Container>
+        <Container onClick={()=> navigate(`/gatos/${id}`)}>
             <ImageContainer>
                 <img src={fotoperfil} alt="" />
             </ImageContainer>
@@ -32,12 +34,15 @@ const Container = styled.div`
 `
 
 const ImageContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
     height: 70px;
     width: 70px;
     border-radius: 80px;
     img{
-        width: 100%;
+        height: 70px;
     }
 `
 const TextContainer = styled.div`

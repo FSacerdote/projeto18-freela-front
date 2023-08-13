@@ -7,6 +7,8 @@ import { UserContextProvider } from "./context/AuthContext"
 import HomePage from "./pages/HomePage"
 import NewCat from "./pages/NewCat"
 import MyCats from "./pages/MyCats"
+import CatPage from "./pages/CatPage"
+import TelaInicial from "./pages/TelaInicial"
 
 
 function App() {
@@ -20,9 +22,10 @@ function App() {
           <Route path="/login" element={<LoginPage/>}/>
           <Route path="/cadastro" element={<SignUpPage/>}/>
           <Route path="/home" element={<HomePage/>}/>
-          <Route path="/gatos/:id"/>
+          <Route path="/gatos/:id" element={<CatPage/>}/>
           <Route path="/gatos/me" element={<MyCats/>}/>
           <Route path="/gatos/new" element={<NewCat/>}/>
+          <Route path="/" element={<TelaInicial/>}/>
         </Routes>
       </UserContextProvider>
     </BrowserRouter>

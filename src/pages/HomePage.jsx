@@ -11,6 +11,7 @@ export default function HomePage(){
 
     const [gatos, setGatos] = useState([])
     const {token} = useContext(UserContext)
+    const [search, setSearch] = useState("")
 
     const config = {
         headers: {
@@ -26,10 +27,12 @@ export default function HomePage(){
             .catch((error)=>console.log(error.response))
     }, [])
 
-    if(gatos.length === 0){
+    const filtro = gatos.filter((gato)=> gato.nome.toLowerCase().includes(search.toLowerCase()))
+
+    if(filtro.length === 0){
         return(
             <Page>
-                <Header></Header>
+                <Header search={search} setSearch={setSearch}></Header>
                     <p>Nenhum gatinho por aqui ainda</p>
                     <GiCat color="#4d4d4d" size="100px"/>
                 <Footer></Footer>
@@ -39,9 +42,9 @@ export default function HomePage(){
 
     return(
         <Page>
-            <Header></Header>
+            <Header search={search} setSearch={setSearch}></Header>
                 <CatContainer>
-                    {gatos?.map((gato)=><Cat key={gato.id} gato={gato}/>)}
+                    {filtro?.map((gato)=><Cat key={gato.id} gato={gato}/>)}
                 </CatContainer>
             <Footer></Footer>
         </Page>
