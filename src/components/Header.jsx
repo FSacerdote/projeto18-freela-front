@@ -13,7 +13,7 @@ export default function Header({ search, setSearch }) {
     function logout() {
         setToken(null)
         localStorage.clear()
-        navigate("/login")
+        navigate("/")
     }
 
     return (
