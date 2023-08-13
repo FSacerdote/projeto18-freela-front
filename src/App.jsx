@@ -6,6 +6,7 @@ import SignUpPage from "./pages/SignUpPage"
 import { UserContextProvider } from "./context/AuthContext"
 import HomePage from "./pages/HomePage"
 import NewCat from "./pages/NewCat"
+import MyCats from "./pages/MyCats"
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
           <Route path="/cadastro" element={<SignUpPage/>}/>
           <Route path="/home" element={<HomePage/>}/>
           <Route path="/gatos/:id"/>
-          <Route path="/gatos/me"/>
+          <Route path="/gatos/me" element={<MyCats/>}/>
           <Route path="/gatos/new" element={<NewCat/>}/>
         </Routes>
       </UserContextProvider>
