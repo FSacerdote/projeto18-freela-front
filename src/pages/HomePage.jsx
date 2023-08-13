@@ -41,7 +41,7 @@ export default function HomePage(){
         <Page>
             <Header></Header>
                 <CatContainer>
-                    {gatos?.map((gato)=><Cat/>)}
+                    {gatos?.map((gato)=><Cat key={gato.id} gato={gato}/>)}
                 </CatContainer>
             <Footer></Footer>
         </Page>

@@ -1,15 +1,18 @@
 import { styled } from "styled-components"
 
-export default function Cat(){
+export default function Cat({gato}){
+
+    const { nome, idade, genero, fotoperfil } = gato
+
     return(
         <Container>
             <ImageContainer>
-                <img src="https://conteudo.imguol.com.br/c/entretenimento/36/2022/05/22/gata-tricolor-gato-gatos-1653265224214_v2_3x4.jpg" alt="" />
+                <img src={fotoperfil} alt="" />
             </ImageContainer>
             <TextContainer>
-                <p>Nome: Fulaninho</p>
-                <p>Idade: 3 meses</p>
-                <p>Gênero: Macho</p>
+                <p>Nome: {nome}</p>
+                <p>Idade: {idade >= 12? (idade/12).toFixed(1) : idade} {idade >= 12? "anos" : "meses"}</p>
+                <p>Gênero: {genero}</p>
             </TextContainer>
         </Container>
     )
