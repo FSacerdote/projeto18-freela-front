@@ -2,13 +2,17 @@ import { styled } from "styled-components"
 import { AiFillHome } from "react-icons/ai"
 import {BsFillGearFill} from "react-icons/bs"
 import {BiPlus} from "react-icons/bi"
+import { useNavigate } from "react-router-dom"
 
 export default function Footer (){
+
+    const navigate = useNavigate()
+
     return(
         <Container>
-            <AiFillHome color="white" size="30px"/>
-            <BsFillGearFill color="white" size="30px"/>
-            <BiPlus color="white" size="30px"/>
+            <AiFillHome onClick={()=>navigate("/home")} color="white" size="30px"/>
+            <BsFillGearFill onClick={()=>navigate("/gatos/me")} color="white" size="30px"/>
+            <BiPlus onClick={()=>navigate("/gatos/new")} color="white" size="30px"/>
         </Container>
     )
 }
