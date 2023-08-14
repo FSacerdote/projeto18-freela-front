@@ -3,6 +3,8 @@ import logo from "../assets/logoSemFundo.png"
 import { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 export default function SignUpPage() {
 
@@ -15,19 +17,48 @@ export default function SignUpPage() {
     const [foto, setFoto] = useState("")
     const [confirmar, setConfirmar] = useState("")
 
-
     function cadastrar(event) {
         event.preventDefault()
-        if (password.length < 3) return alert("A senha deve ter pelo menos 3 digitos")
-        if (password !== confirmar) return alert("A confirmação de senha deve ser igual a senha")
+        if (password.length < 3) return Swal.fire({
+            title: 'Erro!',
+            text: 'A senha deve ter pelo menos 3 digitos',
+            icon: 'error',
+            confirmButtonText: 'Continuar'
+        })
+        if (password !== confirmar) return Swal.fire({
+            title: 'Erro!',
+            text: 'A confirmação de senha deve ser igual a senha',
+            icon: 'error',
+            confirmButtonText: 'Continuar'
+        })
         axios.post(`${import.meta.env.VITE_API_URL}/signup`, { nome, email, password, cpf, telefone, foto })
             .then(() => {
-                navigate("/login")
+                Swal.fire({
+                    title: 'Sucesso!',
+                    text: 'Cadastro realizado',
+                    icon: 'success',
+                    confirmButtonText: 'Continuar'
+                }).then(()=>navigate("/login"))
             })
             .catch((error) => {
-                if (error.response.status === 409) return alert("Email ou Cpf já cadastrados")
-                if (error.response.status === 422) return alert("Erro no formato dos dados, tente novamente")
-                alert("Erro ao realizar o cadastro, tente novamente mais tarde ou consulte o suporte tecnico")
+                if (error.response.status === 409) return Swal.fire({
+                    title: 'Erro!',
+                    text: 'Email ou Cpf já cadastrados',
+                    icon: 'error',
+                    confirmButtonText: 'Continuar'
+                })
+                if (error.response.status === 422) return Swal.fire({
+                    title: 'Erro!',
+                    text: 'Erro no formato dos dados, tente novamente',
+                    icon: 'error',
+                    confirmButtonText: 'Continuar'
+                })
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Erro ao realizar o cadastro, tente novamente mais tarde ou consulte o suporte tecnico',
+                    icon: 'error',
+                    confirmButtonText: 'Continuar'
+                })
             })
     }
 

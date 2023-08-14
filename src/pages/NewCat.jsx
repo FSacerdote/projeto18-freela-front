@@ -5,6 +5,8 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import Footer from "../components/Footer"
 import { UserContext } from "../context/AuthContext"
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 export default function NewCat() {
 
@@ -24,7 +26,12 @@ export default function NewCat() {
         event.preventDefault()
         axios.post(`${import.meta.env.VITE_API_URL}/gatos`, { nome, idade, genero, fotoperfil }, config)
             .then(() => {
-                navigate("/home")
+                Swal.fire({
+                    title: 'Sucesso!',
+                    text: 'Novo Miaudelo cadastrado!',
+                    icon: 'success',
+                    confirmButtonText: 'Continuar'
+                }).then(()=>navigate("/home"))
             })
             .catch((error) => {
                 console.log(error)

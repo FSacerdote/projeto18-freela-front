@@ -4,6 +4,8 @@ import axios from "axios"
 import { UserContext } from "../context/AuthContext"
 import { useNavigate } from "react-router-dom"
 import { useContext, useState } from "react"
+import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 export default function LoginPage() {
 
@@ -22,9 +24,24 @@ export default function LoginPage() {
             })
             .catch((error) => {
                 console.log(error)
-                if (error.response.status === 404) return alert("usuário inválido")
-                if (error.response.status === 401) return alert("Senha inválida, tente novamente")
-                alert("Erro ao realizar o login, tente novamente mais tarde ou consulte o suporte tecnico")
+                if (error.response.status === 404) return Swal.fire({
+                    title: 'Erro!',
+                    text: 'Esse email não está cadastrado',
+                    icon: 'error',
+                    confirmButtonText: 'Continuar'
+                  })
+                if (error.response.status === 401) return Swal.fire({
+                    title: 'Erro!',
+                    text: 'Senha incorreta, tente novamente',
+                    icon: 'error',
+                    confirmButtonText: 'Continuar'
+                  })
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Erro ao realizar o login, tente novamente mais tarde ou consulte o suporte tecnico',
+                    icon: 'error',
+                    confirmButtonText: 'Continuar'
+                })
             })
     }
 
