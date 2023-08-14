@@ -2,9 +2,11 @@ import axios from "axios"
 import { styled } from "styled-components"
 import { UserContext } from "../context/AuthContext"
 import { useContext } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function MyCat({ gato, contador, setContador }) {
 
+    const navigate = useNavigate()
     const { token } = useContext(UserContext)
     const { nome, disponibilidade, fotoperfil, id } = gato
     const config = {
@@ -13,7 +15,8 @@ export default function MyCat({ gato, contador, setContador }) {
         }
     }
 
-    function changeStatus() {
+    function changeStatus(event) {
+        event.stopPropagation()
         axios.patch(`${import.meta.env.VITE_API_URL}/gatos/${id}`, {}, config)
             .then(() => {
                 setContador(contador + 1)
@@ -22,7 +25,7 @@ export default function MyCat({ gato, contador, setContador }) {
     }
 
     return (
-        <Container>
+        <Container onClick={()=>navigate(`/gatos/me/${id}`)}>
             <ImageContainer>
                 <img src={fotoperfil} alt="" />
             </ImageContainer>
@@ -36,6 +39,7 @@ export default function MyCat({ gato, contador, setContador }) {
 }
 
 const Container = styled.div`
+z-index: 0;
     padding-left: 15px;
     overflow: hidden;
     display: flex;
@@ -69,6 +73,7 @@ const TextContainer = styled.div`
         font-weight: 400;
     }
     button{
+        z-index: 1;
         height: 30px;
         width: 140px;
         border: none;

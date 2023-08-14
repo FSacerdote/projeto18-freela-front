@@ -9,6 +9,7 @@ import NewCat from "./pages/NewCat"
 import MyCats from "./pages/MyCats"
 import CatPage from "./pages/CatPage"
 import TelaInicial from "./pages/TelaInicial"
+import MyCatPage from "./pages/MyCatPage"
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/gatos/me" element={<MyCats/>}/>
           <Route path="/gatos/new" element={<NewCat/>}/>
           <Route path="/" element={<TelaInicial/>}/>
+          <Route path="/gatos/me/:id" element={<MyCatPage/>}/>
         </Routes>
       </UserContextProvider>
     </BrowserRouter>
