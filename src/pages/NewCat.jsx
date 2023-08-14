@@ -14,7 +14,8 @@ export default function NewCat() {
     const { token } = useContext(UserContext)
     const [nome, setNome] = useState("")
     const [idade, setIdade] = useState("")
-    const [genero, setGenero] = useState("")
+    const [macho, setMacho] = useState(false)
+    const [femea, setFemea] = useState(false)
     const [fotoperfil, setFotoPerfil] = useState("")
     const config = {
         headers: {
@@ -24,6 +25,19 @@ export default function NewCat() {
 
     function cadastrar(event) {
         event.preventDefault()
+        if (idade < 1) return Swal.fire({
+            title: 'Erro!',
+            text: 'Idade deve ser maior que zero',
+            icon: 'error',
+            confirmButtonText: 'Continuar'
+        })
+        if (macho === false && femea === false) return Swal.fire({
+            title: 'Erro!',
+            text: 'Selecione o gênero do seu pet',
+            icon: 'error',
+            confirmButtonText: 'Continuar'
+        })
+        const genero = macho? "Macho": "Fêmea"
         axios.post(`${import.meta.env.VITE_API_URL}/gatos`, { nome, idade, genero, fotoperfil }, config)
             .then(() => {
                 Swal.fire({
@@ -48,7 +62,13 @@ export default function NewCat() {
                 <Form onSubmit={cadastrar}>
                     <input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
                     <input type="number" placeholder="Idade (em meses)" value={idade} onChange={(e) => setIdade(e.target.value)} required />
-                    <input type="text" placeholder="Genero" value={genero} onChange={(e) => setGenero(e.target.value)} required />
+                    <div>
+                        <p>Genêro:</p>
+                        <input type="checkbox" placeholder="Genero" checked={macho} onChange={() => {setMacho(true); setFemea(false)}}/>
+                        <p>Macho</p>
+                        <input type="checkbox" placeholder="Genero" checked={femea} onChange={() => {setMacho(false); setFemea(true)}}/>
+                        <p>Fêmea</p>
+                    </div>
                     <input type="text" placeholder="Foto de Perfil" value={fotoperfil} onChange={(e) => setFotoPerfil(e.target.value)} required />
                     <button>Cadastrar Miaudelo</button>
                 </Form>
@@ -131,5 +151,23 @@ const Form = styled.form`
         font-weight: 700;
         font-size: 17px;
         color: black;
+    }
+    div{
+        padding-right: 10px;
+        padding-left: 10px;
+        width: 80%;
+        display: flex;
+        align-items: center;
+        height: 40px;
+        border-radius: 8px;
+        border: none;
+        background:#F7e37c;
+        p{
+            font-family: 'Raleway', sans-serif;
+            font-weight: 400;
+        }
+        input{
+            height: 20px;
+        }
     }
 `

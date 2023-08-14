@@ -14,7 +14,6 @@ export default function SignUpPage() {
     const [nome, setNome] = useState("")
     const [telefone, setTelefone] = useState("")
     const [cpf, setCpf] = useState("")
-    const [foto, setFoto] = useState("")
     const [confirmar, setConfirmar] = useState("")
 
     function cadastrar(event) {
@@ -31,7 +30,7 @@ export default function SignUpPage() {
             icon: 'error',
             confirmButtonText: 'Continuar'
         })
-        axios.post(`${import.meta.env.VITE_API_URL}/signup`, { nome, email, password, cpf, telefone, foto })
+        axios.post(`${import.meta.env.VITE_API_URL}/signup`, { nome, email, password, cpf, telefone })
             .then(() => {
                 Swal.fire({
                     title: 'Sucesso!',
@@ -87,7 +86,6 @@ export default function SignUpPage() {
                         if (value.length > 10) value = value.substring(0, 10) + '-' + value.substring(10, 14)
                         setTelefone(value)
                     }} required />
-                    <input type="url" placeholder="Foto de perfil" value={foto} onChange={(e) => setFoto(e.target.value)} required />
                     <button>Criar Conta</button>
                     <h1 onClick={() => navigate("/login")}>Já é cadastrado? Faça Login!</h1>
                 </Form>
@@ -119,7 +117,7 @@ const Header = styled.div`
 `
 
 const Container = styled.div`
-    height: 75%;
+    height: 65%;
     width: 80%;
     border-radius: 15px;
     background-color: white;
